@@ -26,9 +26,6 @@ cache:
 - i686-4.9.2-release-win32-sjlj-rt_v3-rev1.7z
 - x86_64-4.9.2-release-win32-seh-rt_v3-rev1.7z
 
-init:
-- ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
-
 build_script:
 - ps: |
     mkdir build
@@ -42,7 +39,7 @@ build_script:
     if "%GENERATOR%"=="MSYS Makefiles" (C:\MinGW\msys\1.0\bin\sh --login /c/projects/libgit2/script/appveyor-mingw.sh)
 test_script:
 - ps: |
-    Start-Job { java -jar poxyproxy.jar -d --port 8080 --credentials foo:bar }
+    Start-Job { java -jar C:\projects\libgit2\build\poxyproxy.jar -d --port 8080 --credentials foo:bar }
     ctest -V .
     $env:GITTEST_REMOTE_PROXY_URL = "http://foo:bar@localhost:8080/"
     .\Debug\libgit2_clar.exe -sonline::clone::proxy_credentials_in_url
