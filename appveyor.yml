@@ -25,6 +25,10 @@ matrix:
 cache:
 - i686-4.9.2-release-win32-sjlj-rt_v3-rev1.7z
 - x86_64-4.9.2-release-win32-seh-rt_v3-rev1.7z
+
+init:
+- ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+
 build_script:
 - ps: |
     mkdir build
